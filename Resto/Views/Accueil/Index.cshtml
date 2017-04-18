@@ -1,0 +1,33 @@
+﻿@*@model Resto.ViewModels.AccueilViewModel*@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <p> Prêt à choisir un restaurant</p> 
+    </div>
+
+@using (Html.BeginForm())
+{
+    <input type="submit" value="Créer un sondage" />
+}
+    <ul>
+        <li>@Html.ActionLink("Ajouter un  restaurant", "CreerRestaurant", "Restaurant")</li>
+        <li>@Html.ActionLink("Modifier les restaurants", "Index", "Restaurant")</li>
+
+        @*<li>@Model.Message</li>
+        <li>@Model.Date.ToString("dd/MM/yyyy")</li>
+        <li>@Model.Resto.Nom</li>
+        <li>@Model.Resto.Telephone</li>*@
+    </ul>
+</body>
+</html>
