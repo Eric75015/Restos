@@ -8,10 +8,7 @@ namespace Resto.Models
 {
     public class BddContext :  DbContext
     {
-        public BddContext() : base("RestoDB")
-        {
-
-        }
+       
         public DbSet<Sondage> Sondages { get; set; }
         public DbSet<Resto> Restos { get; set; }
 

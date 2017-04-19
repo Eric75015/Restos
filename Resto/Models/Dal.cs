@@ -16,15 +16,15 @@ namespace Resto.Models
 
         }
 
-        public bool ADejaVote(int v1, string v2)
+        public bool ADejaVote(int idSondage, string idStr)
         {
-            int id;
-            if (int.TryParse(v2, out id))
+            Utilisateur utilisateur = ObtenirUtilisateur(idStr);
+            if (utilisateur != null)
             {
-                Sondage sondage = bdd.Sondages.First(s => s.Id == v1);
+                Sondage sondage = bdd.Sondages.First(s => s.Id == idSondage);
                 if (sondage.Votes == null)
                     return false;
-                return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == id);
+                return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == utilisateur.Id);
             }
             return false;
         }
@@ -111,14 +111,30 @@ namespace Resto.Models
             return resultats;
         }
 
-        public Utilisateur ObtenirUtilisateur(string name)
+        public Utilisateur ObtenirUtilisateur(string idStr)
         {
-            
-            int result = 0;
-            Int32.TryParse(name, out result);
-            if (result == 0)
-                return null;
-            return bdd.Utilisateurs.FirstOrDefault(o => o.Id == result);
+            switch (idStr)
+            {
+                case "Chrome":
+                    return CreeOuRecupere("Nico", "1234");
+                case "IE":
+                    return CreeOuRecupere("Jérémie", "1234");
+                case "Firefox":
+                    return CreeOuRecupere("Delphine", "1234");
+                default:
+                    return CreeOuRecupere("Timéo", "1234");
+            }
+        }
+
+        private Utilisateur CreeOuRecupere(string nom, string motDePasse)
+        {
+            Utilisateur utilisateur = Authentifier(nom, motDePasse);
+            if (utilisateur == null)
+            {
+                int id = AjouterUtilisateur(nom, motDePasse);
+                return ObtenirUtilisateur(id);
+            }
+            return utilisateur;
         }
 
         public Utilisateur ObtenirUtilisateur(int id)

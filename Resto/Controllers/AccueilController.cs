@@ -12,7 +12,7 @@ namespace Resto.Controllers
     {
         private IDal dal;
 
-        public AccueilController()
+        public AccueilController() : this(new Dal())
         {
             
         }
